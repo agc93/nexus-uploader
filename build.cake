@@ -1,5 +1,5 @@
 #load "build/helpers.cake"
-// #addin nuget:?package=Cake.Docker
+#tool "nuget:https://api.nuget.org/v3/index.json?package=nuget.commandline&version=5.3.1"
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
