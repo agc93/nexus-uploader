@@ -67,7 +67,8 @@ namespace NexusUploader.Nexus.Services
                             if (r2.Item2 == null) return 1;
                             return r1.Item2.CompareByPrecedence(r2.Item2);
                         });
-                        var highestV = mainFiles.FirstOrDefault(f => f.FileVersion == semvers.First().FileVersion);
+                        // semvers.Reverse();
+                        var highestV = mainFiles.FirstOrDefault(f => f.FileVersion == semvers.Last().FileVersion);
                         return highestV.FileId;
                     }
                 }

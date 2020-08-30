@@ -31,7 +31,7 @@ namespace NexusUploader.Nexus
                 logging.AddInlineSpectreConsole(c => {
                     c.LogLevel = GetLogLevel();
                 });
-                logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Warning);
+                logging.AddFilter("System.Net.Http", LogLevel.Warning);
             });
             services.AddNexusApiClient();
             services.AddNexusClient();

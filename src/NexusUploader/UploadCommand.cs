@@ -1,4 +1,6 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NexusUploader.Nexus.Services;
@@ -28,6 +30,10 @@ namespace NexusUploader.Nexus
         {
             var config = settings.MergedConfiguration;
             var fileOpts = new FileOptions(config.FileName, settings.FileVersion) {Description = config.FileDescription };
+            if (settings.SkipMainVersionUpdate.IsSet && settings.SkipMainVersionUpdate.Value) {
+                _logger.LogWarning("Skipping mod version update!");
+                fileOpts.UpdateMainVersion = false;
+            }
             if (!IsConfigurationValid(settings) && !settings.AllowInteractive) {
                 AnsiConsole.MarkupLine("[bold red]ERROR[/]: not all configuration is set correctly and unex is not running interactively. Exiting!");
                 return -1;
@@ -52,7 +58,7 @@ namespace NexusUploader.Nexus
                 }
             }
             _logger.LogInformation($"Preparing to upload '{settings.ModFilePath}' to Nexus Mods upload API");
-            var upload = await _uploader.UploadFile(game, config.ModId, new System.IO.FileInfo(settings.ModFilePath));
+            var upload = await _uploader.UploadFile(game, config.ModId, new FileInfo(Path.GetFullPath(settings.ModFilePath)));
             _logger.LogInformation($"File successfully uploaded to Nexus Mods with ID '{upload.Id}'");
             var available = await _uploader.CheckStatus(upload);
             _logger.LogDebug($"File '{upload.Id}' confirmed as assembled: {available}");
@@ -60,7 +66,7 @@ namespace NexusUploader.Nexus
             _logger.LogDebug($"Using file options: {fileOpts.ToString()}");
             await _manager.AddFile(game, config.ModId, upload, fileOpts);
             _logger.LogInformation($"{upload.OriginalFile} successfully uploaded and added to mod {config.ModId}!");
-            _logger.LogDebug("Now go ask @Pickysaurus when a real API will be available! ;)");
+            _logger.LogInformation("Now go ask @Pickysaurus when a real API will be available! ;)");
             return 0;
         }
 
@@ -78,8 +84,6 @@ namespace NexusUploader.Nexus
             {
                 _config = config;
             }
-            /* [CommandOption("-k|--api-key [value]")]
-            public FlagValue<string> ApiKey {get;set;} */
 
             [CommandArgument(0, "<mod-id>")]
             public int ModId {get;set;}
@@ -94,14 +98,21 @@ namespace NexusUploader.Nexus
             public FlagValue<string> ApiKey {get;set;}
 
             [CommandOption("-f|--file-name [value]")]
+            [Description("Name for the file on Nexus Mods")]
             public FlagValue<string> FileName {get;set;}
 
             [CommandOption("-v|--version <value>")]
+            [Description("Version for your uploaded file. May also update your main version.")]
             [Required]
             public string FileVersion {get;set;}
 
+            [CommandOption("--no-version-update")]
+            [Description("Skips updating your mod's main version to match this file's version")]
+            public FlagValue<bool> SkipMainVersionUpdate {get;set;}
+
             private bool IsSettingsValid() {
                 return ModFilePath.IsSet()
+                    && FileVersion.IsSet()
                     && (ApiKey.IsSet || _config.ApiKey.IsSet()) 
                     && (FileName.IsSet || _config.FileName.IsSet())
                     && ModId != default(int)
@@ -119,7 +130,7 @@ namespace NexusUploader.Nexus
                     _config.ApiKey = ApiKey.IsSet ? ApiKey.Value : _config.ApiKey;
                     _config.FileDescription = _config.FileDescription ?? string.Empty;
                     _config.FileName = FileName.IsSet ? FileName.Value : _config.FileName;
-                    _config.ModId = ModId;
+                    _config.ModId = ModId == default(int) ? _config.ModId : ModId;
                 }
                 return base.Validate();
             }

@@ -83,6 +83,7 @@ namespace NexusUploader.Nexus.Services
                 content.Add(options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "update-version");
                 content.Add(1.ToContent(), "category");
                 if (options.PreviousFileId.HasValue) {
+                    content.Add(1.ToContent(), "new-existing");
                     content.Add(options.PreviousFileId.Value.ToContent(), "old_file_id");
                 }
                 content.Add(options.Description.ToContent(), "brief-overview");

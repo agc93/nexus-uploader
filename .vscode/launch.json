@@ -10,7 +10,7 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/NexusUploader/bin/Debug/netcoreapp3.1/unex.dll",
-            "args": ["upload", "163", "D:\\Mods\\Nexus\\Vortex1.zip", "-v", "0.1.6"],
+            "args": ["upload", "163", "D:\\Mods\\Nexus\\Vortex1.zip", "-v", "0.1.8"],
             // "args": ["check"],
             // "args": ["changelog", "Some changelog text\nincluding extra lines!", "-v 0.1.1"],
             "cwd": "${workspaceFolder}/src/NexusUploader",
@@ -20,9 +20,10 @@
             "env": {
                 "unex_game": "site",
                 "unex_filename": "Upload Test",
-                "unex_filedescription": "Some text with details\nand formatting!",
+                "unex_filedescription": "Some text with details\nand newlines!",
                 "unex_debug": "true",
-                "unex_cookies": "cookies.txt"
+                "unex_cookies": "cookies.txt",
+                "unex_previousfile": "718"
             }
         },
         {
