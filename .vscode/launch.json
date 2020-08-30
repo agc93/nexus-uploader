@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [{
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/NexusUploader/bin/Debug/netcoreapp3.1/unex.dll",
+            "args": ["upload", "163", "D:\\Mods\\Nexus\\Vortex1.zip", "-v", "0.1.6"],
+            // "args": ["check"],
+            // "args": ["changelog", "Some changelog text\nincluding extra lines!", "-v 0.1.1"],
+            "cwd": "${workspaceFolder}/src/NexusUploader",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "integratedTerminal",
+            "stopAtEntry": true,
+            "env": {
+                "unex_game": "site",
+                "unex_filename": "Upload Test",
+                "unex_filedescription": "Some text with details\nand formatting!",
+                "unex_debug": "true",
+                "unex_cookies": "cookies.txt"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
