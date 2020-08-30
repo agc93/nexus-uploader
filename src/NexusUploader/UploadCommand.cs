@@ -15,15 +15,13 @@ namespace NexusUploader.Nexus
         private readonly ManageClient _manager;
         private readonly ApiClient _apiClient;
         private readonly UploadClient _uploader;
-        private readonly ModConfiguration _config;
         private readonly ILogger<UploadCommand> _logger;
 
-        public UploadCommand(ManageClient client, ApiClient apiClient, UploadClient uploader, ModConfiguration config, ILogger<UploadCommand> logger)
+        public UploadCommand(ManageClient client, ApiClient apiClient, UploadClient uploader, ILogger<UploadCommand> logger)
         {
             _manager = client;
             _apiClient = apiClient;
             _uploader = uploader;
-            _config = config;
             _logger = logger;
         }
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
