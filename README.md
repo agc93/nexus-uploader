@@ -8,7 +8,7 @@ This is a small command-line tool that can be used to upload mod files to an exi
 
 This is **very** unofficial and **very** unsupported. If you want to see an official and supported API for mod authors, open a topic on [the forums](https://forums.nexusmods.com/index.php?/forum/117-feedback-suggestions-and-questions/) or in `#site-help-feedback` on Discord to let Nexus know the demand.
 
-This tool does not automate the web UI (as an [existing solution](https://github.com/BUTR/Bannerlord.NexusmodsUploader) already does a perfectly good job of this (👋 Aragas)), but instead recreates the underlying requests to upload a file and add it to an existing mod. It also supports adding/updating changelogs, but this hasn't been tested much.
+This tool does not automate the web UI, as an [existing solution](https://github.com/BUTR/Bannerlord.NexusmodsUploader) already does a perfectly good job of this (👋 Aragas), but instead recreates the underlying requests to upload a file and add it to an existing mod. It also supports adding/updating changelogs, but this hasn't been tested much.
 
 ## Configuration and Usage
 
@@ -25,6 +25,8 @@ FileDescription: |-
 
   You can include whatever you like in your description, it's added as-is.
 ```
+
+> You can also use a JSON configuration file if you prefer, you heathen
 
 The remaining two configuration keys are sensitive and should not be made public, but you need both of them (for hard-to-explain reasons): a valid API key and session cookies. Your API key should be in the `UNEX_APIKEY` environment variable. Cookies can be provided in two ways:
 
