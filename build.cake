@@ -145,12 +145,11 @@ Task("Build-NuGet-Package")
 	foreach(var project in projects.SourceProjects) {
 		CreateDirectory($"{artifacts}packages/dotnet-any");
 		var packSettings = new DotNetCorePackSettings {
-			ArgumentCustomization = args => args.Append($"/p:Version={packageVersion}"),
+			ArgumentCustomization = args => args.Append($"/p:Version={packageVersion}").Append("/p:NoWarn=\"NU5105\""),
 			Configuration = configuration,
 			OutputDirectory = $"{artifacts}packages/dotnet-any/"
 		};
 		DotNetCorePack(project.Path.FullPath, packSettings);
-		// Zip($"{artifacts}publish/{project.Name}/dotnet-any/", $"{artifacts}packages/dotnet-any/gpm-dotnet.zip");
 	}
 });
 
