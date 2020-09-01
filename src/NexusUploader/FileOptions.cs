@@ -12,6 +12,7 @@
         public string Description {get;set;} = string.Empty;
         // public string Category {get;set;}
         public bool UpdateMainVersion {get;set;} = true;
+        public bool SetAsMainVortex {get;set;} = true;
         public int? PreviousFileId {get;set;}
 
         public override string ToString() {

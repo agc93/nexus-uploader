@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace NexusUploader.Nexus.Services
 {
@@ -12,11 +13,13 @@ namespace NexusUploader.Nexus.Services
     {
         private readonly HttpClient _httpClient;
         private readonly CookieService _cookies;
+        private readonly ILogger<ManageClient> _logger;
 
-        public ManageClient(HttpClient httpClient, CookieService cookieService)
+        public ManageClient(HttpClient httpClient, CookieService cookieService, ILogger<ManageClient> logger)
         {
             _httpClient = httpClient;
             _cookies = cookieService;
+            _logger = logger;
         }
 
         public async Task<bool> CheckValidSession() {
@@ -70,7 +73,7 @@ namespace NexusUploader.Nexus.Services
             return false;
         }
 
-        public async Task<HttpResponseMessage> AddFile(GameRef game, int modId, UploadedFile upload, FileOptions options)
+        public async Task<bool> AddFile(GameRef game, int modId, UploadedFile upload, FileOptions options)
         {
             var uri = "/Core/Libs/Common/Managers/Mods?AddFile";
             var message = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -81,6 +84,7 @@ namespace NexusUploader.Nexus.Services
                 content.Add(options.Name.ToContent(), "name");
                 content.Add(options.Version.ToContent(), "file-version");
                 content.Add(options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "update-version");
+                content.Add(options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "set_as_main_nmm");
                 content.Add(1.ToContent(), "category");
                 if (options.PreviousFileId.HasValue) {
                     content.Add(1.ToContent(), "new-existing");
@@ -96,7 +100,17 @@ namespace NexusUploader.Nexus.Services
                 content.Add(upload.OriginalFile.ToContent(), "original_file");
                 message.Content = content;
                 var resp = await _httpClient.SendAsync(message);
-                return resp;
+                if (resp.IsSuccessStatusCode) {
+                    var strResponse = await resp.Content.ReadAsStringAsync();
+                    var data = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(strResponse);
+                    var success = data.ContainsKey("status") && data["status"].ToString() == true.ToString();
+                    if (success) {
+                        return true;
+                    } else {
+                        _logger.LogWarning("Response received from Nexus Mods: " + data["message"].ToString());
+                    }
+                }
+                return false;
             }
         }
     }

@@ -62,10 +62,15 @@ namespace NexusUploader.Nexus
             _logger.LogDebug($"File '{upload.Id}' confirmed as assembled: {available}");
             _logger.LogInformation($"Adding uploaded file to mod {config.ModId}");
             _logger.LogDebug($"Using file options: {fileOpts.ToString()}");
-            await _manager.AddFile(game, config.ModId, upload, fileOpts);
-            _logger.LogInformation($"{upload.OriginalFile} successfully uploaded and added to mod {config.ModId}!");
-            _logger.LogInformation("Now go ask @Pickysaurus when a real API will be available! ;)");
-            return 0;
+            var success = await _manager.AddFile(game, config.ModId, upload, fileOpts);
+            if (success) {
+                _logger.LogInformation($"{upload.OriginalFile} successfully uploaded and added to mod {config.ModId}!");
+                _logger.LogInformation("Now go ask @Pickysaurus when a real API will be available! ;)");
+                return 0;
+            } else {
+                _logger.LogWarning($"There was an error adding {upload.OriginalFile} to mod {config.ModId}!");
+                return 1;
+            }
         }
 
         private bool IsConfigurationValid(Settings settings) {
@@ -113,7 +118,7 @@ namespace NexusUploader.Nexus
                     && FileVersion.IsSet()
                     && (ApiKey.IsSet || _config.ApiKey.IsSet()) 
                     && (FileName.IsSet || _config.FileName.IsSet())
-                    && ModId != default(int)
+                    && (ModId != default(int) || _config.ModId != default(int))
                     && _config.Game.IsSet();
             }
 

@@ -18,7 +18,7 @@ namespace NexusUploader.Nexus.Services
 
         public async Task<int> GetGameId(string gameName, string apiKey)
         {
-            using (var req = new HttpRequestMessage(HttpMethod.Get, "games/site.json"))
+            using (var req = new HttpRequestMessage(HttpMethod.Get, $"games/{gameName}.json"))
             {
                 req.Headers.Add("apikey", apiKey);
                 var resp = await _httpClient.SendAsync(req);
