@@ -10,6 +10,24 @@ This is **very** unofficial and **very** unsupported. If you want to see an offi
 
 This tool does not automate the web UI, as an [existing solution](https://github.com/BUTR/Bannerlord.NexusmodsUploader) already does a perfectly good job of this (👋 Aragas), but instead recreates the underlying requests to upload a file and add it to an existing mod. It also supports adding/updating changelogs, but this hasn't been tested much.
 
+## Installation
+
+You can either download the binary for your platform from the Releases section on the right, or install it using the `dotnet` CLI:
+
+```bash
+dotnet tool install -g NexusUploader
+# then run with
+unex
+```
+
+If your project already has a local tools manifest, you can also install it locally:
+
+```bash
+dotnet tool install NexusUploader
+# then run with
+dotnet unex
+```
+
 ## Configuration and Usage
 
 Since there's a lot of information required when updating mods, the recommended method is to create a configuration file for non-sensitive information and use environment variables just for the sensitive information. That being said, you can mix-and-match keys from the config file or environment variables (just prefix them with `UNEX_`) at will.
