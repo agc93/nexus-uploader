@@ -62,6 +62,7 @@ namespace NexusUploader.Nexus.Services
                 content.Add(new StringContent(version), "new_version[]");
                 content.Add(new StringContent(change), "new_change[]");
             }
+            content.Add("save".ToContent(), "action");
             content.Add(new StringContent(modId.ToString()), "id");
             message.Content = content;
             var resp = await _httpClient.SendAsync(message);
