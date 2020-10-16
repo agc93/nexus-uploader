@@ -7,6 +7,8 @@ using NexusUploader.Nexus.Services;
 using Spectre.Cli;
 using Spectre.Console;
 using ValidationResult = Spectre.Cli.ValidationResult;
+using HandlebarsDotNet;
+using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace NexusUploader.Nexus
 {
@@ -28,6 +30,19 @@ namespace NexusUploader.Nexus
         {
             var config = settings.MergedConfiguration;
             var fileOpts = new FileOptions(config.FileName, settings.FileVersion) {Description = config.FileDescription };
+            try
+            {
+                var compAction = Handlebars.Compile(fileOpts.Description);
+                var result = compAction?.Invoke(fileOpts);
+                if (!string.IsNullOrWhiteSpace(result) && !string.Equals(fileOpts.Description, result)) {
+                    AnsiConsole.MarkupLine("Compiled description template using current file options.");
+                    fileOpts.Description = result;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                AnsiConsole.MarkupLine($"[bold red]ERROR[/]: {ex.Message}");
+            }
             if (settings.SkipMainVersionUpdate.IsSet && settings.SkipMainVersionUpdate.Value) {
                 _logger.LogWarning("Skipping mod version update!");
                 fileOpts.UpdateMainVersion = false;
