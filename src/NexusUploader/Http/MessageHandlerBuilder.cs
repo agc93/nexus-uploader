@@ -49,33 +49,4 @@ namespace NexusUploader.Nexus.Http
             return c;
         }
     }
-
-    public class NexusCookieHandler : HttpClientHandler
-    {
-        private readonly CookieService _cookies;
-        private readonly ILogger<NexusCookieHandler> _logger;
-
-        public NexusCookieHandler(CookieService cookieService, ILogger<NexusCookieHandler> logger)
-        {
-            _cookies = cookieService;
-            _logger = logger;
-            base.CookieContainer = GetCookies();
-        }
-
-        private CookieContainer GetCookies()
-        {
-            var c = new CookieContainer();
-            try {
-            foreach (var cookie in _cookies.GetCookies())
-            {
-                if (!string.IsNullOrWhiteSpace(cookie.Key) && !string.IsNullOrWhiteSpace(cookie.Value)) {
-                    c.Add(new Cookie(cookie.Key, cookie.Value) { Domain = "nexusmods.com"});
-                }
-            }
-            } catch {
-                _logger.LogError("Error encountered while loading cookies! [bold] This probably won't work![/]");
-            }
-            return c;
-        }
-    }
 }

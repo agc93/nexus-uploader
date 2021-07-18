@@ -85,13 +85,17 @@ namespace NexusUploader.Nexus.Services
                 content.Add(options.Name.ToContent(), "name");
                 content.Add(options.Version.ToContent(), "file-version");
                 content.Add(options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "update-version");
-                content.Add(options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "set_as_main_nmm");
                 content.Add(1.ToContent(), "category");
                 if (options.PreviousFileId.HasValue) {
                     content.Add(1.ToContent(), "new-existing");
                     content.Add(options.PreviousFileId.Value.ToContent(), "old_file_id");
                 }
                 content.Add(options.Description.ToContent(), "brief-overview");
+                content.Add(options.SetAsMainVortex != null
+                    ? options.SetAsMainVortex.Value
+                        ? 1.ToContent()
+                        : 0.ToContent()
+                    : options.UpdateMainVersion ? 1.ToContent() : 0.ToContent(), "set_as_main_nmm");
                 content.Add(upload.Id.ToContent(), "file_uuid");
                 content.Add(upload.FileSize.ToContent(), "file_size");
                 content.Add(modId.ToContent(), "mod_id");

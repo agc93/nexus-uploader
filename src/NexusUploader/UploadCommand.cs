@@ -47,6 +47,10 @@ namespace NexusUploader.Nexus
                 _logger.LogWarning("Skipping mod version update!");
                 fileOpts.UpdateMainVersion = false;
             }
+            if (settings.SetMainVortexFile.IsSet) {
+                _logger.LogInformation($"Setting file as main Vortex file: {settings.SetMainVortexFile.Value}");
+                fileOpts.SetAsMainVortex = settings.SetMainVortexFile.Value;
+            }
             if (!IsConfigurationValid(settings) && !settings.AllowInteractive) {
                 AnsiConsole.MarkupLine("[bold red]ERROR[/]: not all configuration is set correctly and unex is not running interactively. Exiting!");
                 return -1;
@@ -127,6 +131,10 @@ namespace NexusUploader.Nexus
             [CommandOption("--no-version-update")]
             [Description("Skips updating your mod's main version to match this file's version")]
             public FlagValue<bool> SkipMainVersionUpdate {get;set;}
+
+            [CommandOption("--set-main-vortex")]
+            [Description("Sets this file as the main Vortex file (for the Download with Manager buttons)")]
+            public FlagValue<bool> SetMainVortexFile {get;set;}
 
             private bool IsSettingsValid() {
                 return ModFilePath.IsSet()
