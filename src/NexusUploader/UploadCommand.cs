@@ -43,6 +43,11 @@ namespace NexusUploader.Nexus
             {
                 AnsiConsole.MarkupLine($"[bold red]ERROR[/]: {ex.Message}");
             }
+            if (settings.RemoveDownloadWithManager.IsSet)
+            {
+                _logger.LogInformation($"Remove Download with Manager option: {settings.RemoveDownloadWithManager.Value}");
+                fileOpts.RemoveDownloadWithManager = settings.RemoveDownloadWithManager.Value;
+            }
             if (settings.SkipMainVersionUpdate.IsSet && settings.SkipMainVersionUpdate.Value) {
                 _logger.LogWarning("Skipping mod version update!");
                 fileOpts.UpdateMainVersion = false;
@@ -128,11 +133,15 @@ namespace NexusUploader.Nexus
             [Required]
             public string FileVersion {get;set;}
 
-            [CommandOption("--no-version-update")]
+            [CommandOption("--remove-download-with-manager [value]")]
+            [Description("Removes the Download With Manager button")]
+            public FlagValue<bool> RemoveDownloadWithManager { get; set; }
+
+            [CommandOption("--no-version-update [value]")]
             [Description("Skips updating your mod's main version to match this file's version")]
             public FlagValue<bool> SkipMainVersionUpdate {get;set;}
 
-            [CommandOption("--set-main-vortex")]
+            [CommandOption("--set-main-vortex [value]")]
             [Description("Sets this file as the main Vortex file (for the Download with Manager buttons)")]
             public FlagValue<bool> SetMainVortexFile {get;set;}
 

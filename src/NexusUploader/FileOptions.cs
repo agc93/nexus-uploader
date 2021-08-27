@@ -11,6 +11,7 @@
         public string Version {get;}
         public string Description {get;set;} = string.Empty;
         // public string Category {get;set;}
+        public bool RemoveDownloadWithManager { get; set; }
         public bool UpdateMainVersion {get;set;} = true;
         public bool? SetAsMainVortex {get;set;}
         public int? PreviousFileId {get;set;}
