@@ -363,3 +363,4 @@ FodyWeavers.xsd
 
 dist/
 tools/
+/src/NexusUploader/Properties/launchSettings.json
