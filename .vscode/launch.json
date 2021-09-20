@@ -27,6 +27,27 @@
             }
         },
         {
+            "name": ".NET Core Launch (check)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/NexusUploader/bin/Debug/netcoreapp3.1/unex.dll",
+            "args": ["check"],
+            // "args": ["check"],
+            // "args": ["changelog", "Some changelog text\nincluding extra lines!", "-v 0.1.1"],
+            "cwd": "${workspaceFolder}/src/NexusUploader",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "integratedTerminal",
+            "stopAtEntry": true,
+            "env": {
+                "unex_debug": "true",
+                "unex_cookies": "cookies.txt",
+                "unex_previousfile": "718",
+                "unex_apikey": "WVNPQjlDVjIvNHhuZWhXakxYOGVHd050SEgyYmorcE9YNXFnbEk2V1NFRT0tLVFldGtnNERNaGM0NzVOeEg4SXhrVGc9PQ==--b5485cd0c93f6ebf6bcd1ed3bab536a47ede0fb1"
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
