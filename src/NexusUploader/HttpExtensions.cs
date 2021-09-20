@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public static class HttpExtensions
     {

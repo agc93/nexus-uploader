@@ -1,4 +1,4 @@
-﻿namespace NexusUploader.Nexus
+﻿namespace NexusUploader
 {
     public class ModConfiguration
     {

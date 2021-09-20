@@ -1,10 +1,9 @@
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 using Spectre.Cli;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public class ChangelogCommand : AsyncCommand<ChangelogCommand.Settings>
     {

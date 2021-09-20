@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Encodings.Web;
 
-namespace NexusUploader.Nexus.Services
+namespace NexusUploader.Services
 {
     public class CookieService
     {

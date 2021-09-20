@@ -1,16 +1,15 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
+using HandlebarsDotNet;
 using Microsoft.Extensions.Logging;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 using Spectre.Cli;
 using Spectre.Console;
 using ValidationResult = Spectre.Cli.ValidationResult;
-using HandlebarsDotNet;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public class UploadCommand : AsyncCommand<UploadCommand.Settings>
     {
@@ -163,7 +162,7 @@ namespace NexusUploader.Nexus
                     return ValidationResult.Error("Interactive execution not currently implemented. Sorry about that!");
                 } else if (IsSettingsValid()) {
                     _config.ApiKey = ApiKey.IsSet ? ApiKey.Value : _config.ApiKey;
-                    _config.FileDescription = _config.FileDescription ?? string.Empty;
+                    _config.FileDescription ??= string.Empty;
                     _config.FileName = FileName.IsSet ? FileName.Value : _config.FileName;
                     _config.ModId = ModId == default(int) ? _config.ModId : ModId;
                 }

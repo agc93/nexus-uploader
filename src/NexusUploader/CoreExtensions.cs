@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public static class CoreExtensions
     {

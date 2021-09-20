@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 using Spectre.Cli;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public class CheckCommand : AsyncCommand<CheckCommand.Settings>
     {

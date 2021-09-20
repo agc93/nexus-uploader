@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
+using NexusUploader.Nexus;
 
-namespace NexusUploader.Nexus.Services
+namespace NexusUploader.Services
 {
     public class ManageClient
     {

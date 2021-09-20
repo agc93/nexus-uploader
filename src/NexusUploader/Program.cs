@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NexusUploader.Nexus.Http;
-using NexusUploader.Nexus.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NexusUploader.Http;
+using NexusUploader.Services;
 using Spectre.Cli;
 using Spectre.Cli.AppInfo;
 using Spectre.Cli.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     class Program
     {

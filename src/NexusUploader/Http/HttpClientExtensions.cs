@@ -1,10 +1,7 @@
-using System.Net;
-using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 
-namespace NexusUploader.Nexus.Http
+namespace NexusUploader.Http
 {
     public static class HttpClientExtensions
     {

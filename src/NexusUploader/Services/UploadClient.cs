@@ -5,8 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl;
+using NexusUploader.Nexus;
 
-namespace NexusUploader.Nexus.Services
+namespace NexusUploader.Services
 {
     public class UploadClient
     {

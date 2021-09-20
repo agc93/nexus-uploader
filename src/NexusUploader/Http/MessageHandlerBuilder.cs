@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 
-namespace NexusUploader.Nexus.Http
+namespace NexusUploader.Http
 {
     public class NexusMessageHandlerBuilder : HttpMessageHandlerBuilder
     {
@@ -37,12 +35,12 @@ namespace NexusUploader.Nexus.Http
         {
             var c = new CookieContainer();
             try {
-            foreach (var cookie in _cookies.GetCookies())
-            {
-                if (!string.IsNullOrWhiteSpace(cookie.Key) && !string.IsNullOrWhiteSpace(cookie.Value)) {
-                    c.Add(new Cookie(cookie.Key, cookie.Value) { Domain = "nexusmods.com"});
+                foreach (var (name, value) in _cookies.GetCookies())
+                {
+                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(value)) {
+                        c.Add(new Cookie(name, value) { Domain = "nexusmods.com"});
+                    }
                 }
-            }
             } catch {
                 _logger.LogError("Error encountered while loading cookies! [bold] This probably won't work![/]");
             }

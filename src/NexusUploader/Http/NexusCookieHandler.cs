@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
-using NexusUploader.Nexus.Services;
+using NexusUploader.Services;
 
-namespace NexusUploader.Nexus.Http
+namespace NexusUploader.Http
 {
     public class NexusCookieHandler : HttpClientHandler
     {

@@ -1,6 +1,6 @@
 using Spectre.Cli;
 
-namespace NexusUploader.Nexus
+namespace NexusUploader
 {
     public class AppSettings : CommandSettings {
 
