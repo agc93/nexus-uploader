@@ -91,6 +91,7 @@ namespace NexusUploader.Nexus.Services
                     content.Add(options.PreviousFileId.Value.ToContent(), "old_file_id");
                 }
                 content.Add(options.Description.ToContent(), "brief-overview");
+                content.Add(options.RemoveDownloadWithManager ? 1.ToContent() : 0.ToContent(), "remove_nmm_button");
                 content.Add(options.SetAsMainVortex != null
                     ? options.SetAsMainVortex.Value
                         ? 1.ToContent()
